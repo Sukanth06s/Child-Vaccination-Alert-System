@@ -2,8 +2,8 @@ import xgboost as xgb
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score,recall_score,precision_score,f1_score
 import pandas as pd
-input_path=r"C:\webp proj\children\vaccine_datasets\BCG.csv"
-output_path=r"C:\Users\Admin\Desktop\Child-Vaccination-Alert-System\bcg.json"
+input_path=r"C:\webp proj\children\vaccine_datasets\Rotavirus1.csv"
+output_path=r"C:\Users\Admin\Desktop\Child-Vaccination-Alert-System\rotavirus1.json"
 df=pd.read_csv(input_path)
 x=df[['v012','v106','v025','v190','v101','b19','b4','bord']]
 y=df['label']
