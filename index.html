@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VaxRegistry | Pro</title>
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --accent: #10b981;
+            --bg: #f0f4f8;
+            --sidebar: #1e293b;
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', system-ui, sans-serif; 
+            background: var(--bg); 
+            margin: 0; 
+            display: flex; 
+            color: #334155;
+        }
+
+        /* Floating Sidebar */
+        nav {
+            width: 280px;
+            height: 90vh;
+            background: var(--sidebar);
+            margin: 5vh 20px;
+            border-radius: 20px;
+            position: fixed;
+            color: white;
+            padding: 30px 20px;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        nav h2 { font-size: 1.2rem; margin-bottom: 40px; color: var(--primary); letter-spacing: 1px; }
+
+        nav ul { list-style: none; padding: 0; }
+        nav ul li { margin-bottom: 15px; }
+        nav ul li a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 12px 15px;
+            display: block;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+        nav ul li a:hover { background: rgba(255,255,255,0.1); color: white; transform: translateX(5px); }
+
+        /* Main Content */
+        main {
+            margin-left: 340px;
+            padding: 40px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .section-card {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            margin-bottom: 50px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.5);
+        }
+        
+        .section-card:hover { transform: translateY(-5px); }
+
+        h3 { margin-top: 0; color: var(--sidebar); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 25px; }
+
+        /* Form Styling */
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .full-width { grid-column: 1 / -1; }
+
+        .input-group { display: flex; flex-direction: column; margin-bottom: 15px; }
+        label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px; }
+        input, select {
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        input:focus { border-color: var(--primary); }
+
+        /* Custom Checkbox Grid */
+        .vax-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+        .vax-box {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .vax-box:hover { background: #f1f5f9; }
+        .vax-box input { margin-right: 12px; width: 18px; height: 18px; }
+
+        .submit-area { position: sticky; bottom: 20px; z-index: 10; }
+        .btn-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 15px;
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <h2>Vaccination Entry</h2>
+    <ul>
+        <li><a href="#child-id">Child Identity</a></li>
+        <li><a href="#demographics">Demographics</a></li>
+        <li><a href="#std-vax">Standard History</a></li>
+        <li><a href="#exp-vax">Expanded Immunization</a></li>
+    </ul>
+</nav>
+
+<main>
+    <form id="masterForm">
+        <section id="child-id" class="section-card">
+            <h3>Child Identity</h3>
+            <div class="grid">
+                <div class="input-group">
+                    <label>Child's Full Name</label>
+                    <input type="text" name="childName" placeholder="John Doe">
+                </div>
+                <div class="input-group">
+                    <label>Date of Birth</label>
+                    <input type="date" name="dob">
+                </div>
+                <div class="input-group">
+                    <label>Father's Name</label>
+                    <input type="text" name="fatherName">
+                </div>
+                <div class="input-group">
+                    <label>Mother's Name</label>
+                    <input type="text" name="motherName">
+                </div>
+            </div>
+        </section>
+
+        <section id="demographics" class="section-card">
+            <h3>Demographic Information</h3>
+            <div class="grid">
+                <div class="input-group">
+                    <label>Mother's Age (v012)</label>
+                    <input type="number" name="v012">
+                </div>
+                <div class="input-group">
+                    <label>Mother's Education (v106)</label>
+                    <select name="v106">
+                        <option value="0">None</option>
+                        <option value="1">Primary</option>
+                        <option value="2">Secondary</option>
+                        <option value="3">Higher</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Wealth Index (v190)</label>
+                    <select name="v190">
+                        <option value="1">Poorest</option>
+                        <option value="2">Poorer</option>
+                        <option value="3">Middle</option>
+                        <option value="4">Richer</option>
+                        <option value="5">Richest</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Residence (v025)</label>
+                    <select name="v025">
+                        <option value="1">Urban</option>
+                        <option value="2">Rural</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>State (v101)</label>
+                    <input type="text" name="v101">
+                </div>
+                <div class="input-group">
+                    <label>Age in Months (b19)</label>
+                    <input type="number" name="b19">
+                </div>
+                <div class="input-group">
+                    <label>Child Sex (b4)</label>
+                    <select name="b4">
+                        <option value="1">Male</option>
+                        <option value="2">Female</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>Birth Order (bord)</label>
+                    <input type="number" name="bord">
+                </div>
+            </div>
+        </section>
+
+        <section id="std-vax" class="section-card">
+            <h3>Standard Vaccination History</h3>
+            <div class="vax-container">
+                <label class="vax-box"><input type="checkbox" name="h3"> DPT 1</label>
+                <label class="vax-box"><input type="checkbox" name="h5"> DPT 2</label>
+                <label class="vax-box"><input type="checkbox" name="h7"> DPT 3</label>
+                <label class="vax-box"><input type="checkbox" name="h4"> Polio 1</label>
+                <label class="vax-box"><input type="checkbox" name="h6"> Polio 2</label>
+                <label class="vax-box"><input type="checkbox" name="h8"> Polio 3</label>
+                <label class="vax-box"><input type="checkbox" name="h0"> Polio 0</label>
+                <label class="vax-box"><input type="checkbox" name="h9"> Measles 1</label>
+                <label class="vax-box"><input type="checkbox" name="h9a"> Measles 2</label>
+            </div>
+        </section>
+
+        <section id="exp-vax" class="section-card">
+            <h3>Expanded Immunization</h3>
+            <div class="vax-container">
+                <label class="vax-box"><input type="checkbox" name="h51"> Penta 1</label>
+                <label class="vax-box"><input type="checkbox" name="h52"> Penta 2</label>
+                <label class="vax-box"><input type="checkbox" name="h53"> Penta 3</label>
+                <label class="vax-box"><input type="checkbox" name="h57"> Rota 1</label>
+                <label class="vax-box"><input type="checkbox" name="h58"> Rota 2</label>
+                <label class="vax-box"><input type="checkbox" name="h59"> Rota 3</label>
+                <label class="vax-box"><input type="checkbox" name="h61"> HepB 1</label>
+                <label class="vax-box"><input type="checkbox" name="h62"> HepB 2</label>
+                <label class="vax-box"><input type="checkbox" name="h63"> HepB 3</label>
+            </div>
+        </section>
+
+        <div class="submit-area">
+            <button type="submit" class="btn-submit">Sync with Secure Database</button>
+        </div>
+    </form>
+</main>
+
+<script>
+    document.getElementById('masterForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const data = {};
+
+        // Logic to parse inputs
+        formData.forEach((value, key) => {
+            if (e.target.querySelector(`[name="${key}"]`).type === 'checkbox') {
+                data[key] = 1; // Handled below for unchecked
+            } else {
+                data[key] = isNaN(value) || value === '' ? value : parseFloat(value);
+            }
+        });
+
+        // Ensure unchecked checkboxes are 0
+        const checkboxes = e.target.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(cb => {
+            data[cb.name] = cb.checked ? 1 : 0;
+        });
+
+        console.log("Payload Prepared:", data);
+        alert("Data compiled for ML model and Database. View console for JSON structure.");
+    });
+</script>
+
+</body>
+</html> 
