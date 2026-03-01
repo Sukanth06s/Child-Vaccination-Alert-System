@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,12 +14,16 @@
             --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
         }
 
-        * { box-sizing: border-box; scroll-behavior: smooth; }
-        body { 
-            font-family: 'Inter', system-ui, sans-serif; 
-            background: var(--bg); 
-            margin: 0; 
-            display: flex; 
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            margin: 0;
+            display: flex;
             color: #334155;
         }
 
@@ -38,10 +43,22 @@
             z-index: 100;
         }
 
-        nav h2 { font-size: 1.2rem; margin-bottom: 40px; color: var(--primary); letter-spacing: 1px; }
+        nav h2 {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
 
-        nav ul { list-style: none; padding: 0; }
-        nav ul li { margin-bottom: 15px; }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-bottom: 15px;
+        }
+
         nav ul li a {
             color: #cbd5e1;
             text-decoration: none;
@@ -51,7 +68,12 @@
             border-radius: 10px;
             transition: all 0.3s;
         }
-        nav ul li a:hover { background: rgba(255,255,255,0.1); color: white; transform: translateX(5px); }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(5px);
+        }
 
         /* Main Content */
         main {
@@ -68,20 +90,48 @@
             margin-bottom: 50px;
             box-shadow: var(--card-shadow);
             transition: transform 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
-        
-        .section-card:hover { transform: translateY(-5px); }
 
-        h3 { margin-top: 0; color: var(--sidebar); border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 25px; }
+        .section-card:hover {
+            transform: translateY(-5px);
+        }
+
+        h3 {
+            margin-top: 0;
+            color: var(--sidebar);
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+        }
 
         /* Form Styling */
-        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .full-width { grid-column: 1 / -1; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
 
-        .input-group { display: flex; flex-direction: column; margin-bottom: 15px; }
-        label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-bottom: 6px; }
-        input, select {
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #94a3b8;
+            margin-bottom: 6px;
+        }
+
+        input,
+        select {
             padding: 12px;
             border: 2px solid #e2e8f0;
             border-radius: 10px;
@@ -89,10 +139,18 @@
             outline: none;
             transition: border-color 0.3s;
         }
-        input:focus { border-color: var(--primary); }
+
+        input:focus {
+            border-color: var(--primary);
+        }
 
         /* Custom Checkbox Grid */
-        .vax-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+        .vax-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+        }
+
         .vax-box {
             background: #f8fafc;
             padding: 15px;
@@ -103,10 +161,23 @@
             border: 2px solid transparent;
             transition: all 0.2s;
         }
-        .vax-box:hover { background: #f1f5f9; }
-        .vax-box input { margin-right: 12px; width: 18px; height: 18px; }
 
-        .submit-area { position: sticky; bottom: 20px; z-index: 10; }
+        .vax-box:hover {
+            background: #f1f5f9;
+        }
+
+        .vax-box input {
+            margin-right: 12px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .submit-area {
+            position: sticky;
+            bottom: 20px;
+            z-index: 10;
+        }
+
         .btn-submit {
             background: var(--primary);
             color: white;
@@ -120,7 +191,10 @@
             box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4);
             transition: background 0.3s;
         }
-        .btn-submit:hover { background: #2563eb; }
+
+        .btn-submit:hover {
+            background: #2563eb;
+        }
 
         /* Results Area */
         #resultsContainer {
@@ -150,9 +224,17 @@
             font-weight: 600;
         }
 
-        .risk-low { border-left: 5px solid #10b981; }
-        .risk-medium { border-left: 5px solid #f59e0b; }
-        .risk-high { border-left: 5px solid #ef4444; }
+        .risk-low {
+            border-left: 5px solid #10b981;
+        }
+
+        .risk-medium {
+            border-left: 5px solid #f59e0b;
+        }
+
+        .risk-high {
+            border-left: 5px solid #ef4444;
+        }
 
         .risk-label {
             padding: 4px 10px;
@@ -161,146 +243,406 @@
             font-size: 0.8rem;
             margin-left: 10px;
         }
-        .risk-low .risk-label { background: #10b981; color: white; }
-        .risk-medium .risk-label { background: #f59e0b; color: white; }
-        .risk-high .risk-label { background: #ef4444; color: white; }
 
+        .risk-low .risk-label {
+            background: #10b981;
+            color: white;
+        }
+
+        .risk-medium .risk-label {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .risk-high .risk-label {
+            background: #ef4444;
+            color: white;
+        }
     </style>
 </head>
+
 <body>
 
-<nav>
-    <h2>Vaccination Entry</h2>
-    <ul>
-        <li><a href="#resultsContainer">Prediction Results</a></li>
-        <li><a href="#child-id">Child Identity</a></li>
-        <li><a href="#demographics">Demographics</a></li>
-        <li><a href="#std-vax">Standard History</a></li>
-        <li><a href="#exp-vax">Expanded Immunization</a></li>
-    </ul>
-</nav>
+    <style>
+        .step-container {
+            display: none;
+        }
 
-<main>
-    <div id="resultsContainer">
-        <h3>Prediction Results</h3>
-        <p>Probability of missing the next dose:</p>
-        <ul id="resultsList" class="results-list"></ul>
-    </div>
+        .step-container.active {
+            display: block;
+        }
 
-    <form id="masterForm">
-        <section id="child-id" class="section-card">
-            <h3>Child Identity</h3>
-            <div class="grid">
-                <div class="input-group">
-                    <label>Child's Full Name</label>
-                    <input type="text" name="childName" placeholder="John Doe" required>
-                </div>
-                <div class="input-group">
-                    <label>Date of Birth</label>
-                    <input type="date" name="dob" required>
-                </div>
-                <div class="input-group">
-                    <label>Father's Name</label>
-                    <input type="text" name="fatherName">
-                </div>
-                <div class="input-group">
-                    <label>Mother's Name</label>
-                    <input type="text" name="motherName">
-                </div>
+        .progress-bar-container {
+            background: #e2e8f0;
+            height: 10px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--primary);
+            height: 100%;
+            width: 16.66%;
+            transition: width 0.3s ease;
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-nav {
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-prev {
+            background: #cbd5e1;
+            color: #475569;
+        }
+
+        .btn-next {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-prev:hover {
+            background: #94a3b8;
+        }
+
+        .btn-next:hover {
+            background: #2563eb;
+        }
+
+        .field-label-desc {
+            font-weight: normal;
+            color: #64748b;
+            font-size: 0.75rem;
+            text-transform: none;
+        }
+    </style>
+    </head>
+
+    <body>
+
+        <nav>
+            <h2>VaxRegistry Pro</h2>
+            <ul id="stepList">
+                <li><a href="#" onclick="showStep(1)" class="active">1. Demographics</a></li>
+                <li><a href="#" onclick="showStep(2)">2. Birth Doses</a></li>
+                <li><a href="#" onclick="showStep(3)">3. First Doses</a></li>
+                <li><a href="#" onclick="showStep(4)">4. Second Doses</a></li>
+                <li><a href="#" onclick="showStep(5)">5. Third Doses</a></li>
+                <li><a href="#" onclick="showStep(6)">6. Measles</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
             </div>
-        </section>
 
-        <section id="demographics" class="section-card">
-            <h3>Demographic Information</h3>
-            <div class="grid">
-                <div class="input-group">
-                    <label>Mother's Age (v012)</label>
-                    <input type="number" name="v012">
-                </div>
-                <div class="input-group">
-                    <label>Mother's Education (v106)</label>
-                    <select name="v106">
-                        <option value="0">None</option>
-                        <option value="1">Primary</option>
-                        <option value="2">Secondary</option>
-                        <option value="3">Higher</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Wealth Index (v190)</label>
-                    <select name="v190">
-                        <option value="1">Poorest</option>
-                        <option value="2">Poorer</option>
-                        <option value="3">Middle</option>
-                        <option value="4">Richer</option>
-                        <option value="5">Richest</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Residence (v025)</label>
-                    <select name="v025">
-                        <option value="1">Urban</option>
-                        <option value="2">Rural</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>State (v101)</label>
-                    <input type="text" name="v101">
-                </div>
-                <div class="input-group">
-                    <label>Age in Months (b19)</label>
-                    <input type="number" name="b19">
-                </div>
-                <div class="input-group">
-                    <label>Child Sex (b4)</label>
-                    <select name="b4">
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>Birth Order (bord)</label>
-                    <input type="number" name="bord">
-                </div>
+            <div id="resultsContainer">
+                <h3>Prediction Analysis</h3>
+                <p>Probability of missing subsequent doses based on current profile:</p>
+                <ul id="resultsList" class="results-list"></ul>
             </div>
-        </section>
 
-        <section id="std-vax" class="section-card">
-            <h3>Standard Vaccination History</h3>
-            <div class="vax-container">
-                <label class="vax-box"><input type="checkbox" name="h3"> DPT 1</label>
-                <label class="vax-box"><input type="checkbox" name="h5"> DPT 2</label>
-                <label class="vax-box"><input type="checkbox" name="h7"> DPT 3</label>
-                <label class="vax-box"><input type="checkbox" name="h4"> Polio 1</label>
-                <label class="vax-box"><input type="checkbox" name="h6"> Polio 2</label>
-                <label class="vax-box"><input type="checkbox" name="h8"> Polio 3</label>
-                <label class="vax-box"><input type="checkbox" name="h0"> Polio 0</label>
-                <label class="vax-box"><input type="checkbox" name="h9"> Measles 1</label>
-                <label class="vax-box"><input type="checkbox" name="h9a"> Measles 2</label>
-            </div>
-        </section>
+            <form id="masterForm">
+                <!-- STEP 1: DEMOGRAPHICS -->
+                <div class="step-container active" id="step1">
+                    <div class="section-card">
+                        <div class="step-header">
+                            <h3>Step 1: Demographic Information</h3>
+                            <span class="field-label-desc">Required fields marked *</span>
+                        </div>
 
-        <section id="exp-vax" class="section-card">
-            <h3>Expanded Immunization</h3>
-            <div class="vax-container">
-                <label class="vax-box"><input type="checkbox" name="h51"> Penta 1</label>
-                <label class="vax-box"><input type="checkbox" name="h52"> Penta 2</label>
-                <label class="vax-box"><input type="checkbox" name="h53"> Penta 3</label>
-                <label class="vax-box"><input type="checkbox" name="h57"> Rota 1</label>
-                <label class="vax-box"><input type="checkbox" name="h58"> Rota 2</label>
-                <label class="vax-box"><input type="checkbox" name="h59"> Rota 3</label>
-                <label class="vax-box"><input type="checkbox" name="h61"> HepB 1</label>
-                <label class="vax-box"><input type="checkbox" name="h62"> HepB 2</label>
-                <label class="vax-box"><input type="checkbox" name="h63"> HepB 3</label>
-            </div>
-        </section>
+                        <div class="grid">
+                            <div class="input-group">
+                                <label>Child's Full Name *</label>
+                                <input type="text" name="childName" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Date of Birth *</label>
+                                <input type="date" name="dob" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Mother's Age <span class="field-label-desc">(v012)</span></label>
+                                <input type="number" name="v012">
+                            </div>
+                            <div class="input-group">
+                                <label>Education <span class="field-label-desc">(v106: 0-3)</span></label>
+                                <select name="v106">
+                                    <option value="0">None</option>
+                                    <option value="1">Primary</option>
+                                    <option value="2">Secondary</option>
+                                    <option value="3">Higher</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Wealth Index <span class="field-label-desc">(v190: 1-5)</span></label>
+                                <select name="v190">
+                                    <option value="1">Poorest</option>
+                                    <option value="2">Poorer</option>
+                                    <option value="3">Middle</option>
+                                    <option value="4">Richer</option>
+                                    <option value="5">Richest</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Residence <span class="field-label-desc">(v025: 1-2)</span></label>
+                                <select name="v025">
+                                    <option value="1">Urban</option>
+                                    <option value="2">Rural</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>State <span class="field-label-desc">(v101: 1-37)</span></label>
+                                <select name="v101">
+                                    <option value="1">Jammu & Kashmir</option>
+                                    <option value="2">Himachal Pradesh</option>
+                                    <option value="3">Punjab</option>
+                                    <option value="4">Chandigarh</option>
+                                    <option value="5">Uttarakhand</option>
+                                    <option value="6">Haryana</option>
+                                    <option value="7">NCT of Delhi</option>
+                                    <option value="8">Rajasthan</option>
+                                    <option value="9">Uttar Pradesh</option>
+                                    <option value="10">Bihar</option>
+                                    <option value="11">Sikkim</option>
+                                    <option value="12">Arunachal Pradesh</option>
+                                    <option value="13">Nagaland</option>
+                                    <option value="14">Manipur</option>
+                                    <option value="15">Mizoram</option>
+                                    <option value="16">Tripura</option>
+                                    <option value="17">Meghalaya</option>
+                                    <option value="18">Assam</option>
+                                    <option value="19">West Bengal</option>
+                                    <option value="20">Jharkhand</option>
+                                    <option value="21">Odisha</option>
+                                    <option value="22">Chhattisgarh</option>
+                                    <option value="23">Madhya Pradesh</option>
+                                    <option value="24">Gujarat</option>
+                                    <option value="25">Dadra & Nagar Haveli and Daman & Diu</option>
+                                    <option value="27">Maharashtra</option>
+                                    <option value="28">Andhra Pradesh</option>
+                                    <option value="29">Karnataka</option>
+                                    <option value="30">Goa</option>
+                                    <option value="31">Lakshadweep</option>
+                                    <option value="32">Kerala</option>
+                                    <option value="33">Tamil Nadu</option>
+                                    <option value="34">Puducherry</option>
+                                    <option value="35">Andaman & Nicobar Islands</option>
+                                    <option value="36">Telangana</option>
+                                    <option value="37">Ladakh</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Child Sex <span class="field-label-desc">(b4: 1-2)</span></label>
+                                <select name="b4">
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Child is Alive? <span class="field-label-desc">(b5)</span></label>
+                                <select name="b5">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Birth Order <span class="field-label-desc">(bord)</span></label>
+                                <input type="number" name="bord">
+                            </div>
+                            <div class="input-group">
+                                <label>Age in Months <span class="field-label-desc">(b19)</span></label>
+                                <input type="number" name="b19">
+                            </div>
+                            <div class="input-group">
+                                <label>Literacy <span class="field-label-desc">(v155)</span></label>
+                                <select name="v155">
+                                    <option value="0">Cannot read at all</option>
+                                    <option value="1">Able to read only parts</option>
+                                    <option value="2">Able to read whole sentence</option>
+                                    <option value="3">No card in language</option>
+                                    <option value="4">Blind/Visually impaired</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Read Newspaper <span class="field-label-desc">(v157)</span></label>
+                                <select name="v157">
+                                    <option value="0">Not at all</option>
+                                    <option value="1">Less than once a week</option>
+                                    <option value="2">At least once a week</option>
+                                    <option value="3">Almost every day</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Listen to Radio <span class="field-label-desc">(v158)</span></label>
+                                <select name="v158">
+                                    <option value="0">Not at all</option>
+                                    <option value="1">Less than once a week</option>
+                                    <option value="2">At least once a week</option>
+                                    <option value="3">Almost every day</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Watch TV <span class="field-label-desc">(v159)</span></label>
+                                <select name="v159">
+                                    <option value="0">Not at all</option>
+                                    <option value="1">Less than once a week</option>
+                                    <option value="2">At least once a week</option>
+                                    <option value="3">Almost every day</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Dist. to Health Fac. <span class="field-label-desc">(v467d)</span></label>
+                                <select name="v467d">
+                                    <option value="0">No problem</option>
+                                    <option value="1">Big problem</option>
+                                    <option value="2">Not a big problem</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Health Insurance <span class="field-label-desc">(v481)</span></label>
+                                <select name="v481">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Health Card <span class="field-label-desc">(h1)</span></label>
+                                <select name="h1">
+                                    <option value="0">No card</option>
+                                    <option value="1">Card seen</option>
+                                    <option value="2">Card not seen</option>
+                                    <option value="3">Card formerly seen</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>ANC Visits <span class="field-label-desc">(m14)</span></label>
+                                <input type="number" name="m14">
+                            </div>
+                            <div class="input-group">
+                                <label>Place of Delivery <span class="field-label-desc">(m15)</span></label>
+                                <input type="number" name="m15">
+                            </div>
+                            <div class="input-group">
+                                <label>C-Section <span class="field-label-desc">(m17)</span></label>
+                                <select name="m17">
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label>Size at Birth <span class="field-label-desc">(m18)</span></label>
+                                <input type="number" name="m18">
+                            </div>
+                            <div class="input-group">
+                                <label>Drinking Water <span class="field-label-desc">(v113)</span></label>
+                                <input type="number" name="v113">
+                            </div>
+                            <div class="input-group">
+                                <label>Toilet Facility <span class="field-label-desc">(v116)</span></label>
+                                <input type="number" name="v116">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="submit-area">
-            <button type="submit" class="btn-submit" id="submitBtn">Sync Data & Run Predictions</button>
-        </div>
-    </form>
-</main>
+                <!-- STEP 2: BIRTH DOSES -->
+                <div class="step-container" id="step2">
+                    <div class="section-card">
+                        <h3>Step 2: Birth Dose Vaccines</h3>
+                        <div class="vax-container">
+                            <label class="vax-box"><input type="checkbox" name="h2"> BCG (h2)</label>
+                            <label class="vax-box"><input type="checkbox" name="h0"> Polio 0 (h0)</label>
+                            <label class="vax-box"><input type="checkbox" name="h50"> HepB Birth (h50)</label>
+                        </div>
+                    </div>
+                </div>
 
-<script src="{{ url_for('static', filename='main.js') }}"></script>
-</body>
+                <!-- STEP 3: FIRST DOSES -->
+                <div class="step-container" id="step3">
+                    <div class="section-card">
+                        <h3>Step 3: First Dose Vaccines</h3>
+                        <div class="vax-container">
+                            <label class="vax-box"><input type="checkbox" name="h3"> DPT 1 (h3)</label>
+                            <label class="vax-box"><input type="checkbox" name="h4"> Polio 1 (h4)</label>
+                            <label class="vax-box"><input type="checkbox" name="h51"> Pentavalent 1 (h51)</label>
+                            <label class="vax-box"><input type="checkbox" name="h61"> HepB 1 (h61)</label>
+                            <label class="vax-box"><input type="checkbox" name="h57"> Rota 1 (h57)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: SECOND DOSES -->
+                <div class="step-container" id="step4">
+                    <div class="section-card">
+                        <h3>Step 4: Second Dose Vaccines</h3>
+                        <div class="vax-container">
+                            <label class="vax-box"><input type="checkbox" name="h5"> DPT 2 (h5)</label>
+                            <label class="vax-box"><input type="checkbox" name="h6"> Polio 2 (h6)</label>
+                            <label class="vax-box"><input type="checkbox" name="h52"> Pentavalent 2 (h52)</label>
+                            <label class="vax-box"><input type="checkbox" name="h62"> HepB 2 (h62)</label>
+                            <label class="vax-box"><input type="checkbox" name="h58"> Rota 2 (h58)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5: THIRD DOSES -->
+                <div class="step-container" id="step5">
+                    <div class="section-card">
+                        <h3>Step 5: Third Dose Vaccines</h3>
+                        <div class="vax-container">
+                            <label class="vax-box"><input type="checkbox" name="h7"> DPT 3 (h7)</label>
+                            <label class="vax-box"><input type="checkbox" name="h8"> Polio 3 (h8)</label>
+                            <label class="vax-box"><input type="checkbox" name="h53"> Pentavalent 3 (h53)</label>
+                            <label class="vax-box"><input type="checkbox" name="h63"> HepB 3 (h63)</label>
+                            <label class="vax-box"><input type="checkbox" name="h59"> Rota 3 (h59)</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 6: MEASLES -->
+                <div class="step-container" id="step6">
+                    <div class="section-card">
+                        <h3>Step 6: Measles Vaccines</h3>
+                        <div class="vax-container">
+                            <label class="vax-box"><input type="checkbox" name="h9"> Measles 1 (h9)</label>
+                            <label class="vax-box"><input type="checkbox" name="h9a"> Measles 2 (h9a)</label>
+                        </div>
+                    </div>
+
+                    <div class="submit-area">
+                        <button type="submit" class="btn-submit" id="submitBtn">Generate AI Prediction Report</button>
+                    </div>
+                </div>
+
+                <div class="nav-buttons">
+                    <button type="button" class="btn-nav btn-prev" id="prevBtn" style="display: none;"
+                        onclick="changeStep(-1)">Back</button>
+                    <button type="button" class="btn-nav btn-next" id="nextBtn" onclick="changeStep(1)">Next
+                        Step</button>
+                </div>
+            </form>
+        </main>
+
+        <script src="{{ url_for('static', filename='main.js') }}"></script>
+    </body>
+
 </html>

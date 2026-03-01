@@ -5,82 +5,98 @@ import pandas as pd
 
 # Path to model_files dir
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MODEL_DIR = os.path.join(BASE_DIR, 'model_files')
+MODEL_DIR = os.path.join(BASE_DIR, 'datasetfinal')
 
 class PredictionService:
     def __init__(self):
         self.models = {}
+        # Define strict feature mappings for each vaccine model
+        self.generic_features = ["v012", "v106", "v190", "v025", "v101", "b4", "bord", "m14", "m15", "m17", "m18", "h1", "v113", "v116"]
+        
+        self.feature_map = {
+            "bcg": self.generic_features,
+            "polio0": self.generic_features,
+            "hepbbirth": self.generic_features,
+            "dpt1": self.generic_features + ["h2", "h0", "h50"],
+            "polio1": self.generic_features + ["h2", "h0", "h50"],
+            "penta1": self.generic_features + ["h2", "h0", "h50"],
+            "hepb1": self.generic_features + ["h2", "h0", "h50"],
+            "rota1": self.generic_features + ["h2", "h0", "h50"],
+            "dpt2": self.generic_features + ["v157", "v158", "v159", "h3"],
+            "polio2": self.generic_features + ["v157", "v158", "v159", "h4"],
+            "penta2": self.generic_features + ["v157", "v158", "v159", "h51"],
+            "hepb2": self.generic_features + ["v157", "v158", "v159", "h61"],
+            "rota2": self.generic_features + ["v157", "v158", "v159", "h57"],
+            "dpt3": self.generic_features + ["h3", "h5", "v467d"],
+            "polio3": self.generic_features + ["h0", "h4", "h6", "v467d"],
+            "penta3": self.generic_features + ["h51", "h52", "v467d"],
+            "hepb3": self.generic_features + ["h50", "h61", "h62", "v467d"],
+            "rota3": self.generic_features + ["h57", "h58", "v467d"],
+            "measles1": self.generic_features + ["v481"],
+            "measles2": self.generic_features + ["v155", "v481", "h7", "h8", "h53", "h63", "h59", "h9"]
+        }
         self.load_models()
         
     def load_models(self):
-        """
-        Dynamically load XGBoost JSON models from model_files directory.
-        """
         if not os.path.exists(MODEL_DIR):
+            print(f"DEBUG: MODEL_DIR {MODEL_DIR} does not exist", flush=True)
             return
             
-        for filename in os.listdir(MODEL_DIR):
-            if filename.endswith('.json') and filename != 'example.json':
-                vaccine_name = filename.replace('.json', '')
-                filepath = os.path.join(MODEL_DIR, filename)
+        for vaccine in self.feature_map.keys():
+            filename = f"{vaccine}.json"
+            filepath = os.path.join(MODEL_DIR, filename)
+            if os.path.exists(filepath):
                 try:
-                    # Load XGBoost trained models
                     model = xgb.XGBClassifier()
                     model.load_model(filepath)
-                    self.models[vaccine_name] = model
+                    self.models[vaccine] = model
                     print(f"DEBUG: Successfully loaded model: {filename}", flush=True)
                 except Exception as e:
                     print(f"DEBUG: Error loading model {filename}: {e}", flush=True)
+            else:
+                print(f"DEBUG: Model file {filename} not found in {MODEL_DIR}", flush=True)
         print(f"DEBUG: Total models loaded: {len(self.models)}", flush=True)
 
-    def extract_features(self, user_data: dict) -> pd.DataFrame:
-        """
-        Extract the features exactly as expected by the models.
-        """
+    def get_confidence(self, prob):
+        if prob < 0.4: return "Low"
+        if prob < 0.7: return "Medium"
+        return "High"
+
+    def run_predictions(self, user_data: dict) -> list:
+        results = []
+        
         # Helper to convert to float safely
         def safe_float(val):
             try:
-                # v101 or other strings like "Tamil Nadu" will trigger ValueError and return 0.0 safely
-                return float(val) if val is not None and val != '' else 0.0
+                if val is None or val == '': return 0.0
+                return float(val)
             except (ValueError, TypeError):
                 return 0.0
 
-        features_dict = {
-            'v012': [safe_float(user_data.get('v012'))],
-            'v106': [safe_float(user_data.get('v106'))],
-            'v025': [safe_float(user_data.get('v025'))],
-            'v190': [safe_float(user_data.get('v190'))],
-            'v101': [safe_float(user_data.get('v101'))], 
-            'b19':  [safe_float(user_data.get('b19'))],
-            'b4':   [safe_float(user_data.get('b4'))],
-            'bord': [safe_float(user_data.get('bord'))]
-        }
-        df = pd.DataFrame(features_dict)
-        print(f"DEBUG: Extracted features for prediction: {df.columns.tolist()} with values {df.values.tolist()}", flush=True)
-        return df
-
-    def run_predictions(self, user_data: dict) -> dict:
-        """
-        Runs the feature DataFrame through each loaded XGBoost model and returns probabilities.
-        """
-        df_input = self.extract_features(user_data)
-        results = {}
-        
-        print(f"DEBUG: Running predictions for {len(self.models)} models", flush=True)
-        for vaccine_name, model in self.models.items():
+        for vaccine, features in self.feature_map.items():
+            if vaccine not in self.models:
+                continue
+                
             try:
-                # predict_proba returns array of probabilities for each class
-                # Index 1 is the probability of the positive class (i.e. missing the vaccine)
-                # We use .values to pass a pure numpy array to avoid feature_names mismatch errors
+                # Prepare feature array in strict order
+                vals = [safe_float(user_data.get(f)) for f in features]
+                df_input = pd.DataFrame([vals], columns=features)
+                
+                print(f"DEBUG: Prediction Input for {vaccine}: {vals}", flush=True)
+                
+                model = self.models[vaccine]
                 prob_arr = model.predict_proba(df_input.values)
-                prob = prob_arr[0][1]
-                results[vaccine_name] = float(prob)
-                print(f"DEBUG: Success for {vaccine_name}: {prob}", flush=True)
+                prob = float(prob_arr[0][1])
+                
+                results.append({
+                    "vaccine_name": vaccine,
+                    "prediction": 1 if prob >= 0.35 else 0, # Match training threshold
+                    "probability": round(prob * 100, 2),
+                    "confidence_level": self.get_confidence(prob)
+                })
             except Exception as e:
-                print(f"DEBUG: Error predicting for {vaccine_name}: {e}", flush=True)
-                results[vaccine_name + "_error"] = str(e)
+                print(f"DEBUG: Error predicting for {vaccine}: {e}", flush=True)
             
-        print(f"DEBUG: Final results keys: {list(results.keys())}", flush=True)
         return results
 
 # Singleton instance

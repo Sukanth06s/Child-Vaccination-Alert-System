@@ -61,11 +61,27 @@ def process_vaccination():
             v106=safe_int(data.get('v106')),
             v190=safe_int(data.get('v190')),
             v025=safe_int(data.get('v025')),
-            v101=data.get('v101'), # String column
+            v101=data.get('v101'),
+            v155=safe_int(data.get('v155')),
+            v157=safe_int(data.get('v157')),
+            v158=safe_int(data.get('v158')),
+            v159=safe_int(data.get('v159')),
+            v467d=safe_int(data.get('v467d')),
+            v481=safe_int(data.get('v481')),
             b19=safe_int(data.get('b19')),
             b4=safe_int(data.get('b4')),
+            b5=safe_int(data.get('b5')),
             bord=safe_int(data.get('bord')),
+            h1=safe_int(data.get('h1')),
+            v113=data.get('v113'),
+            v116=data.get('v116'),
+            m14=safe_int(data.get('m14')),
+            m15=safe_int(data.get('m15')),
+            m17=safe_int(data.get('m17')),
+            m18=safe_int(data.get('m18')),
+            h2=safe_int(data.get('h2', 0)),
             h0=safe_int(data.get('h0', 0)),
+            h50=safe_int(data.get('h50', 0)),
             h3=safe_int(data.get('h3', 0)),
             h4=safe_int(data.get('h4', 0)),
             h5=safe_int(data.get('h5', 0)),
@@ -89,65 +105,43 @@ def process_vaccination():
         
         # 2. Extract features and run predictions
         print("DEBUG: Running PredictionService.run_predictions...", flush=True)
-        raw_predictions = prediction_service.run_predictions(data)
-        print(f"DEBUG: Got {len(raw_predictions)} raw predictions", flush=True)
+        raw_results = prediction_service.run_predictions(data)
         
-        # 3. Calculate Risk Levels and store results
-        # Mapping model names to h-field names in the UI to filter "already taken" vaccines
+        # 3. Filter and save results
         vax_status_map = {
+            'bcg': 'h2', 'polio0': 'h0', 'hepbbirth': 'h50',
             'dpt1': 'h3', 'dpt2': 'h5', 'dpt3': 'h7',
-            'polio1': 'h4', 'polio2': 'h6', 'polio3': 'h8', 'polio0': 'h0',
+            'polio1': 'h4', 'polio2': 'h6', 'polio3': 'h8',
             'measles1': 'h9', 'measles2': 'h9a',
-            'pentavalent1': 'h51', 'pentavalent2': 'h52', 'pentavalent3': 'h53',
-            'rotavirus1': 'h57', 'rotavirus2': 'h58', 'rotavirus3': 'h59',
-            'hepb1': 'h61', 'hepb2': 'h62', 'hepb3': 'h63',
-            'bcg': 'h2', # Typical DHS code for BCG is h2, though not currently in UI
-            'hepbbirth': 'h2a' # Typical DHS code
+            'penta1': 'h51', 'penta2': 'h52', 'penta3': 'h53',
+            'rota1': 'h57', 'rota2': 'h58', 'rota3': 'h59',
+            'hepb1': 'h61', 'hepb2': 'h62', 'hepb3': 'h63'
         }
 
-        results = []
-        for vaccine, prob in raw_predictions.items():
-            # Check if this vaccine is marked as taken in the form
+        final_predictions = []
+        for res in raw_results:
+            vaccine = res['vaccine_name']
             h_field = vax_status_map.get(vaccine)
-            if h_field and data.get(h_field) == 1:
-                print(f"DEBUG: Skipping {vaccine} because it's already taken (field {h_field}=1)", flush=True)
-                continue
-
-            if isinstance(prob, str) or vaccine.endswith("_error"):
-                print(f"DEBUG: Error found for {vaccine}: {prob}", flush=True)
-                results.append({
-                    "vaccine": vaccine,
-                    "probability": 0,
-                    "risk_level": "ERROR - " + str(prob)
-                })
-                continue
-
-            risk_level = RiskService.calculate_risk_level(prob)
             
+            # Skip if already taken
+            if h_field and safe_int(data.get(h_field)) == 1:
+                continue
+
             # Save prediction to DB
-            print(f"DEBUG: Saving prediction for {vaccine} to DB...", flush=True)
             prediction = Prediction(
                 user_id=user_input.id,
                 vaccine_name=vaccine,
-                miss_probability=prob,
-                risk_level=risk_level
+                miss_probability=res['probability'],
+                risk_level=res['confidence_level'].upper()
             )
             db.session.add(prediction)
+            final_predictions.append(res)
             
-            results.append({
-                "vaccine": vaccine,
-                "probability": round(prob * 100, 2),
-                "risk_level": risk_level
-            })
-            
-        # Commit predictions
-        print(f"DEBUG: Committing {len(results)} predictions to DB...", flush=True)
         db.session.commit()
-        print("DEBUG: Commit successful", flush=True)
         
         return jsonify({
             "message": "Data processed successfully",
-            "predictions": results
+            "predictions": final_predictions
         }), 201
 
     except Exception as e:
