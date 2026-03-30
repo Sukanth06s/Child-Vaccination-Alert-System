@@ -5,6 +5,7 @@ from sqlalchemy import text
 from models.db_models import db, UserInput, Prediction
 from services.prediction_service import prediction_service
 from services.risk_service import RiskService
+from services.sms_service import sms_service
 
 vaccination_bp = Blueprint('vaccination_api', __name__)
 
@@ -57,6 +58,7 @@ def process_vaccination():
             dob=dob_date,
             father_name=data.get('fatherName'),
             mother_name=data.get('motherName'),
+            phone=data.get('phone'),
             v012=safe_int(data.get('v012')),
             v106=safe_int(data.get('v106')),
             v190=safe_int(data.get('v190')),
@@ -138,6 +140,15 @@ def process_vaccination():
             final_predictions.append(res)
             
         db.session.commit()
+        
+        # 4. Dispatch SMS notification
+        phone_number = data.get('phone')
+        if phone_number:
+            print("DEBUG: Dispatching SMS notification...", flush=True)
+            try:
+                sms_service.send_prediction_alert(phone_number, final_predictions)
+            except Exception as e:
+                print(f"SMS Error: {e}", flush=True)
         
         return jsonify({
             "message": "Data processed successfully",

@@ -10,6 +10,7 @@ class UserInput(db.Model):
     dob = db.Column(db.Date, nullable=False)
     father_name = db.Column(db.String(100))
     mother_name = db.Column(db.String(100))
+    phone = db.Column(db.String(20), nullable=True)
     
     # Demographics
     v012 = db.Column(db.Integer)
