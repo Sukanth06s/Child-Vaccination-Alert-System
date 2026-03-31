@@ -532,18 +532,42 @@
                                 <label>Health Card <span class="field-label-desc">(h1)</span></label>
                                 <select name="h1">
                                     <option value="0">No card</option>
-                                    <option value="1">Card seen</option>
-                                    <option value="2">Card not seen</option>
-                                    <option value="3">Card formerly seen</option>
+                                    <option value="1">Yes, seen</option>
+                                    <option value="2">Yes, not seen</option>
+                                    <option value="3">No longer has card</option>
                                 </select>
                             </div>
                             <div class="input-group">
                                 <label>ANC Visits <span class="field-label-desc">(m14)</span></label>
-                                <input type="number" name="m14">
+                                <input type="number" name="m14" placeholder="0 = None, 98 = Don't Know" min="0">
                             </div>
                             <div class="input-group">
                                 <label>Place of Delivery <span class="field-label-desc">(m15)</span></label>
-                                <input type="number" name="m15">
+                                <select name="m15">
+                                    <optgroup label="Home">
+                                        <option value="10">HOME</option>
+                                        <option value="11">Respondent's home</option>
+                                        <option value="12">Other home</option>
+                                        <option value="13">Parents' Home</option>
+                                    </optgroup>
+                                    <optgroup label="Public Sector">
+                                        <option value="20">PUBLIC SECTOR</option>
+                                        <option value="21">Public: Govt./Munic. Hospital</option>
+                                        <option value="22">Public: Govt. Dispensary</option>
+                                        <option value="23">Public: UHC/UHP/UFWC</option>
+                                        <option value="24">Public: CHC/Rural Hospital/Block PHC</option>
+                                        <option value="25">Public: PHC/Additional PHC</option>
+                                        <option value="26">Public: Sub-Centre</option>
+                                        <option value="27">Other Public Sector Health Facility</option>
+                                    </optgroup>
+                                    <optgroup label="Private Sector">
+                                        <option value="30">PRIVATE SECTOR</option>
+                                        <option value="31">Private: Hospital/Maternity Home/Clinic</option>
+                                        <option value="32">Other Private Sector Health Facility</option>
+                                        <option value="33">NGO or Trust Hospital/Clinic</option>
+                                    </optgroup>
+                                    <option value="96">Other</option>
+                                </select>
                             </div>
                             <div class="input-group">
                                 <label>C-Section <span class="field-label-desc">(m17)</span></label>
@@ -554,15 +578,75 @@
                             </div>
                             <div class="input-group">
                                 <label>Size at Birth <span class="field-label-desc">(m18)</span></label>
-                                <input type="number" name="m18">
+                                <select name="m18">
+                                    <option value="1">Very large</option>
+                                    <option value="2">Larger than average</option>
+                                    <option value="3">Average</option>
+                                    <option value="4">Smaller than average</option>
+                                    <option value="5">Very small</option>
+                                    <option value="8">Don't know</option>
+                                </select>
                             </div>
                             <div class="input-group">
                                 <label>Drinking Water <span class="field-label-desc">(v113)</span></label>
-                                <input type="number" name="v113">
+                                <select name="v113">
+                                    <optgroup label="Piped Water">
+                                        <option value="10">PIPED WATER</option>
+                                        <option value="11">Piped into dwelling</option>
+                                        <option value="12">Piped to yard/plot</option>
+                                        <option value="13">Piped to neighbor</option>
+                                        <option value="14">Public tap/standpipe</option>
+                                    </optgroup>
+                                    <optgroup label="Well Water">
+                                        <option value="20">TUBE WELL WATER</option>
+                                        <option value="21">Tube well or borehole</option>
+                                        <option value="30">DUG WELL (OPEN/PROTECTED)</option>
+                                        <option value="31">Protected well</option>
+                                        <option value="32">Unprotected well</option>
+                                    </optgroup>
+                                    <optgroup label="Surface / Other">
+                                        <option value="40">SURFACE FROM SPRING</option>
+                                        <option value="41">Protected spring</option>
+                                        <option value="42">Unprotected spring</option>
+                                        <option value="43">River/dam/lake/ponds/stream/canal/irrigation channel</option>
+                                        <option value="51">Rainwater</option>
+                                        <option value="61">Tanker truck</option>
+                                        <option value="62">Cart with small tank</option>
+                                        <option value="71">Bottled water</option>
+                                        <option value="92">Community or plant</option>
+                                        <option value="96">Other</option>
+                                        <option value="97">Not a dejure resident</option>
+                                    </optgroup>
+                                </select>
                             </div>
                             <div class="input-group">
                                 <label>Toilet Facility <span class="field-label-desc">(v116)</span></label>
-                                <input type="number" name="v116">
+                                <select name="v116">
+                                    <optgroup label="Flush Toilet">
+                                        <option value="10">FLUSH TOILET</option>
+                                        <option value="11">Flush to piped sewer system</option>
+                                        <option value="12">Flush to septic tank</option>
+                                        <option value="13">Flush to pit latrine</option>
+                                        <option value="14">Flush to somewhere else</option>
+                                        <option value="15">Flush, don't know where</option>
+                                    </optgroup>
+                                    <optgroup label="Pit Latrine">
+                                        <option value="20">PIT TOILET LATRINE</option>
+                                        <option value="21">Ventilated Improved Pit latrine (VIP)</option>
+                                        <option value="22">Pit latrine with slab</option>
+                                        <option value="23">Pit latrine without slab/open pit</option>
+                                    </optgroup>
+                                    <optgroup label="No Facility / Other">
+                                        <option value="30">NO FACILITY</option>
+                                        <option value="31">No facility/bush/field</option>
+                                        <option value="41">Composting toilet</option>
+                                        <option value="42">Bucket toilet</option>
+                                        <option value="43">Hanging toilet/latrine</option>
+                                        <option value="44">Dry toilet</option>
+                                        <option value="96">Other</option>
+                                        <option value="97">Not a dejure resident</option>
+                                    </optgroup>
+                                </select>
                             </div>
                         </div>
                     </div>
