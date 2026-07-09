@@ -143,12 +143,17 @@ def process_vaccination():
         
         # 4. Dispatch SMS notification
         phone_number = data.get('phone')
+        sms_sent = False
         if phone_number:
             print("DEBUG: Dispatching SMS notification...", flush=True)
             try:
-                sms_service.send_prediction_alert(phone_number, final_predictions)
+                sms_sent = sms_service.send_prediction_alert(phone_number, final_predictions, child_name=data.get('childName'))
             except Exception as e:
                 print(f"SMS Error: {e}", flush=True)
+        
+        # Update and save the SMS status to DB
+        user_input.sms_sent = sms_sent
+        db.session.commit()
         
         return jsonify({
             "message": "Data processed successfully",

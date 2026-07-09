@@ -32,7 +32,7 @@ class PredictionService:
             "penta3": self.generic_features + ["h51", "h52", "v467d"],
             "hepb3": self.generic_features + ["h50", "h61", "h62", "v467d"],
             "rota3": self.generic_features + ["h57", "h58", "v467d"],
-            "measles1": self.generic_features + ["v481"],
+            "measles1": self.generic_features + ["v481", "h7", "h8", "h53", "h63", "h59"],
             "measles2": self.generic_features + ["v155", "v481", "h7", "h8", "h53", "h63", "h59", "h9"]
         }
         self.load_models()
@@ -42,7 +42,10 @@ class PredictionService:
             print(f"DEBUG: MODEL_DIR {MODEL_DIR} does not exist", flush=True)
             return
             
-        for vaccine in self.feature_map.keys():
+        failed_models = []
+        target_vaccines = list(self.feature_map.keys())
+
+        for vaccine in target_vaccines:
             filename = f"{vaccine}.json"
             filepath = os.path.join(MODEL_DIR, filename)
             if os.path.exists(filepath):
@@ -50,12 +53,18 @@ class PredictionService:
                     model = xgb.XGBClassifier()
                     model.load_model(filepath)
                     self.models[vaccine] = model
-                    print(f"DEBUG: Successfully loaded model: {filename}", flush=True)
                 except Exception as e:
-                    print(f"DEBUG: Error loading model {filename}: {e}", flush=True)
+                    failed_models.append(vaccine)
             else:
-                print(f"DEBUG: Model file {filename} not found in {MODEL_DIR}", flush=True)
-        print(f"DEBUG: Total models loaded: {len(self.models)}", flush=True)
+                failed_models.append(vaccine)
+
+        loaded_count = len(self.models)
+        total_expected = len(target_vaccines)
+
+        if not failed_models:
+            print(f"DEBUG: All models loaded successfully. Total models loaded: {loaded_count}", flush=True)
+        else:
+            print(f"DEBUG: Some models loaded successfully ({loaded_count}/{total_expected}), some failed to load: {', '.join(failed_models)}", flush=True)
 
     def get_confidence(self, prob):
         if prob < 0.4: return "Low"

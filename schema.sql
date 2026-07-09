@@ -10,6 +10,7 @@ CREATE TABLE user_inputs (
     dob DATE NOT NULL,
     father_name VARCHAR(100),
     mother_name VARCHAR(100),
+    phone VARCHAR(20),
     v012 INT,
     v106 INT,
     v190 INT,
@@ -36,6 +37,7 @@ CREATE TABLE user_inputs (
     h61 INT DEFAULT 0,
     h62 INT DEFAULT 0,
     h63 INT DEFAULT 0,
+    sms_sent BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
